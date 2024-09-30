@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Dasara Greeting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            backdrop-filter: blur(3px);
+            background-image: url(https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20191030121702/Mysore-Palace-At-Night.jpg);
+        }
+        .container {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.8); 
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 250px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ff9800;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e68900;
+        }
+        #greeting {
+            margin-top: 20px;
+            font-size: 30px;
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: #f2f2f2;
+            animation: confetti-fall 1s ease-out forwards;
+            will-change: transform;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-110vh);
+            }
+            100% {
+                transform: translateY(100vh); 
+            }
+        }
+
+        @media (max-width: 600px) {
+            #greeting {
+                font-size: 24px; /* Smaller font size for smaller screens */
+            }
+            .container {
+                padding: 20px; /* Less padding on smaller screens */
+            }
+            button {
+                padding: 10px; /* Adjust button size */
+                font-size: 14px; /* Smaller font size */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Your Name</h1>
+        <input type="text" id="nameInput" placeholder="Your Name">
+        <br>
+        <button onclick="displayGreeting()">Submit</button>
+        <p id="greeting"></p>
+    </div>
+
+    <!-- Audio element for celebration music -->
+    <audio id="celebrationMusic" src="your-music-file.mp3"></audio>
+
+    <script>
+        function displayGreeting() {
+            var name = document.getElementById('nameInput').value;
+            if (name) {
+                var greetingMessage = "Happy Dasara, " + name + "!" +"May God Bless you and your family";
+                document.getElementById('greeting').innerHTML = greetingMessage;
+                startConfetti(); // Trigger confetti animation
+                playMusic(); // Play background music
+                speakGreeting(greetingMessage); // Speak the greeting out loud
+            } else {
+                document.getElementById('greeting').innerHTML = "Please enter your name!";
+            }
+        }
+
+        // Confetti generation function
+        function startConfetti() {
+            const confettiCount = 1000; // Reduced count
+            const confettiColors = ['#ffeb3b', '#ff9800', '#4caf50', '#03a9f4', '#e91e63'];
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+                confetti.style.animationDuration = (Math.random() * 2 ) + 's'; // Randomized speed
+
+                document.body.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove(); // Remove confetti after it falls
+                }, 4000);
+            }
+        }
+
+        // Function to play background music
+        function playMusic() {
+            var music = document.getElementById('celebrationMusic');
+            music.play();
+        }
+
+        // Function to speak the greeting
+        function speakGreeting(greetingMessage) {
+            var speech = new SpeechSynthesisUtterance(greetingMessage);
+            speech.lang = 'en-US'; // Set the language to English (US)
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
